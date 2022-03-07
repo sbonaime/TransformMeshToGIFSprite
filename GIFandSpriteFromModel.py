@@ -61,10 +61,12 @@ bpy.ops.object.select_all(action='DESELECT')
 # Clear Blender scene
 # select objects by type
 for o in bpy.data.objects:
+  #  __import__("IPython").embed()
+
     if o.type == 'MESH':
-        o.select = True
+      o.select_set(True)
     else:
-        o.select = False
+      o.select_set(False)
 
 # call the operator once
 bpy.ops.object.delete()
@@ -84,7 +86,9 @@ for obj in objectList:
 print("{} meshes".format(len(meshes)))
 
 for i, obj in enumerate(meshes):
-  bpy.context.scene.objects.active = obj
+  #__import__("IPython").embed()
+  #bpy.context.scene.objects.active = obj
+  bpy.context.view_layer.objects.active = obj
   print("{}/{} meshes, name: {}".format(i, len(meshes), obj.name))
   print("{} has {} verts, {} edges, {} polys".format(obj.name, len(obj.data.vertices), len(obj.data.edges), len(obj.data.polygons)))
 
@@ -122,7 +126,8 @@ for frame_nr in frames:
     # set output path so render won't get overwritten
     context = bpy.context
     scene = context.scene
-    ob = scene.objects.active # the newly added cylinder.
+    #ob = scene.objects.active # the newly added cylinder.
+    ob = context.view_layer.objects.active # the newly added cylinder.
     ob.name = 'tree'
     # set the objects rotation
     ob.rotation_euler = Euler((x_rotation, y_rotation, z_rotation), 'XYZ')
